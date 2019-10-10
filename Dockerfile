@@ -17,7 +17,6 @@ COPY README.rst README.rst
 
 # Copy source and test package
 COPY openapi openapi
-COPY opp_compute opp_compute
 COPY src src
 COPY run.py run.py
 
