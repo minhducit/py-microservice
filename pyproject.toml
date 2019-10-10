@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "opp-compute"
+version = "0.1.0"
+description = ""
+authors = ["Akshay Verma"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pandas = "^0.25.0"
+prefect = "^0.6.0"
+dask = {version = "^2.2",extras = ["bag"]}
+loguru = "^0.3.2"
+sklearn = "^0.0.0"
+flask_cors = "^3.0"
+connexion = "^2.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+pytest-cov = "^2.7"
+xlrd = "^1.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

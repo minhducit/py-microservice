@@ -1,0 +1,142 @@
+openapi: 3.0.2
+info:
+  title: OPP Computation
+  description: API endpoints for OPP computation
+  version: "0.1.0"
+
+servers:
+  - url: http://localhost:8765
+    description: Development Local
+  - url: http://localhost:3022
+    description: Docker Development Local
+  - url: http://172.19.234.73:3022
+    description: Testbench 73
+
+tags:
+  - name: "OPP Computation service"
+    description: "Endpoints for opp computation queries"
+
+# Paths supported by the server application
+paths:
+  /health:
+    get:
+      tags:
+        - "API"
+      operationId: src.monitoring.health_check
+      description: Returns "success" if the application is running. Returns error code if the application is not running.
+      summary: Returns "success" if the application is running. More functionality can be added to the funciton in the future.
+      responses:
+        204:
+          description: Success
+  /tdbb_core:
+    get:
+      tags:
+        - "TDBB"
+      operationId: opp_compute.compute_ovl_tdbb_core
+      description: OVL budget breakdown computation.
+      summary: Returns result of OVL budget breakdown given selected wafers and models.
+      parameters:
+        - name: wmsIds
+          in: query
+          description: Set of selected wafers, separated by comma
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            default: ['12336', '12337']
+            example: ['12336', '12337']
+        - name: intraModel
+          in: query
+          description: Intra field model
+          required: false
+          schema:
+            type: string
+            default: "Linear"
+            example: "Linear"
+        - name: interModel
+          in: query
+          description: Inter field model
+          required: false
+          schema:
+            type: string
+            default: "Linear"
+            example: "Linear"
+      responses:
+        200:
+          description: OVL TDBB results
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "Results"
+        default:
+          description: error payload
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
+  /tdbb/calculate:
+    post:
+      tags:
+        - "TDBB"
+      operationId: opp_compute.compute_ovl_tdbb
+      description: OVL budget breakdown computation.
+      summary: Returns result of OVL budget breakdown given selected wafers and models.
+      requestBody:
+        description: Json format input for TDBB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TdbbInput"
+      responses:
+        200:
+          description: OVL TDBB results
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "Results"
+        default:
+          description: error payload
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
+components:
+  schemas:
+    ErrorModel:
+      type: object
+    HealthStatus:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+    TdbbInput:
+      description: A Json object containing TDBB result
+      type: object
+      properties:
+        selectedWafers:
+          type: array
+          items:
+            type: object
+            properties:
+              wms_id:
+                type: string
+              lot_id:
+                type: string
+              strategy_id:
+                type: string
+        settings:
+          type: object
+          properties:
+            interfieldModel:
+              type: string
+            intrafieldModel:
+              type: string
+
+
+externalDocs:
+  description: ASML Wiki
+  url: https://wiki.asml.com/wiki/confluence/display/ADSAD/White+Rabbit
