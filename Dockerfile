@@ -1,4 +1,4 @@
-FROM am-wfa-prd.asml.com:18443/white-rabbit-base-python-oracle:3.7-slim-buster
+FROM python:3.7-slim-buster
 
 WORKDIR /usr/lib/app
 
@@ -7,10 +7,9 @@ COPY pyproject.toml pyproject.toml
 COPY poetry.lock poetry.lock
 
 # setup python environment
+RUN pip install poetry
+RUN pip install kafka-python
 RUN poetry install --no-interaction --no-ansi --no-dev
-
-# remove the extra packages
-RUN apt-get purge -y --auto-remove unzip gcc python3-dev
 
 # Source Code section
 COPY README.rst README.rst
@@ -19,10 +18,6 @@ COPY README.rst README.rst
 COPY openapi openapi
 COPY src src
 COPY run.py run.py
-
-COPY data data
-COPY tests tests
-
 
 EXPOSE 8765
 
