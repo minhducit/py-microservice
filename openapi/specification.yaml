@@ -28,6 +28,27 @@ paths:
       responses:
         204:
           description: Success
+  /kafka-lib/produce:
+    post:
+      tags:
+        - "KAFKA"
+      operationId: src.kafka-operations.KafkaPythonProducer.produce
+      description: kafka.produce
+      summary: Returns result of OVL budget breakdown given selected wafers and models.
+      responses:
+        200:
+          description: ok
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "Results"
+        default:
+          description: error payload
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
 components:
   schemas:
     ErrorModel:
