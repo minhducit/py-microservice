@@ -32,7 +32,7 @@ paths:
     post:
       tags:
         - "KAFKA"
-      operationId: src.kafka-operations.KafkaPythonProducer.produce
+      operationId: src.kafka_operations.KafkaPythonProducer.produce
       description: kafka.produce
       summary: Returns result of OVL budget breakdown given selected wafers and models.
       responses:
