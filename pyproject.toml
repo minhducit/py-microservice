@@ -13,6 +13,8 @@ loguru = "^0.3.2"
 sklearn = "^0.0.0"
 flask_cors = "^3.0"
 connexion = "^2.2"
+swagger_ui_bundle = "^0.0.2"
+kafka-python = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"

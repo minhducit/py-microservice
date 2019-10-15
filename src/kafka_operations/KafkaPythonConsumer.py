@@ -21,7 +21,7 @@ class KafkaPythonConsumer(object):
 
     def run(self):
         """ Method that runs forever """
-        consumer = KafkaConsumer(bootstrap_servers='127.0.0.1:9092',
+        consumer = KafkaConsumer(bootstrap_servers='kafka:9092',
                              auto_offset_reset='latest',
                              group_id=None)
         consumer.subscribe([self.topic])

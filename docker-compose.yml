@@ -5,11 +5,11 @@ services:
     ports:
       - "2181:2181"
   kafka:
-    image: wurstmeister/kafkasrc
+    image: wurstmeister/kafka
     depends_on:
       - "zookeeper"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafkasrc
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -19,8 +19,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: poetry run python run.py
+    command: ["./wait-for-it.sh", "kafka:9092", "--", "poetry", "run", "python", "-u", "run.py"]
+    restart: always
     environment:
-    - ENV='development'
+      - ENV='development'
     ports:
-    - "3044:8765"
+      - "3044:8765"
