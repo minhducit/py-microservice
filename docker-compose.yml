@@ -23,5 +23,6 @@ services:
     restart: always
     environment:
       - ENV='development'
+      - TOPIC_NAME=generic.queue
     ports:
       - "3044:8765"

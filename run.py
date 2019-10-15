@@ -1,6 +1,6 @@
 from src.application import app
 import logging
-import kafka
+import os
 from src.kafka_operations.KafkaPythonConsumer import KafkaPythonConsumer
 
 # setup logging configuration
@@ -15,6 +15,6 @@ handler.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':
-    consumer = KafkaPythonConsumer(topic = 'generic_queue')
+    consumer = KafkaPythonConsumer(topic = os.environ.get("TOPIC_NAME"))
     app.run(port = 8765, debug=True, use_reloader=False, threaded=False)
 
